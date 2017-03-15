@@ -1,0 +1,19 @@
+#!/bin/bash -l
+#SBATCH -p main # change this option for non-debug runs
+#SBATCH -t 00:20:00
+#SBATCH -o pthreads16.%j.stdout
+#SBATCH -e pthreads16.%j.error
+#SBATCH -N 1
+
+rm pthreads.txt
+./serial -n 500 -no -s pthreads.txt
+./pthreads -p 1 -n 500 -no -s pthreads.txt
+./pthreads -p 2 -n 500 -no -s pthreads.txt
+./pthreads -p 4 -n 500 -no -s pthreads.txt
+./pthreads -p 8 -n 500 -no -s pthreads.txt
+./pthreads -p 16 -n 500 -no -s pthreads.txt
+./pthreads -p 2 -n 1000 -no -s pthreads.txt
+./pthreads -p 4 -n 2000 -no -s pthreads.txt
+./pthreads -p 8 -n 4000 -no -s pthreads.txt
+./pthreads -p 16 -n 8000 -no -s pthreads.txt
+./autograder -v pthreads -s pthreads.txt
